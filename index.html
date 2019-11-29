@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>VueJs - Working on array</title>
+</head>
+
+<body>
+    <!-- View -->
+    <div id="appView">
+        <h1>Welcome to Vue.js!</h1>
+        <h3>Working with array</h3>
+        <form>
+            <label :for="item">Add Item</label>
+            <input type="text" v-model="item" placeholder="Add Item">
+            <button @click.prevent="addItem" type="submit">add</button>
+        </form>
+        <br>
+        <div>
+            <label>Filter Item</label>
+            <input type="text" v-model="filter_Item" placeholder="Search Item">
+        </div>
+        <ul>
+            <li v-for="(tool , index) in filterItems">{{ tool }} ---- <span @click="delItem(index)"
+                    style="cursor: pointer;">delete</span></li>
+        </ul>
+    </div>
+
+    <script src="js/vue.js"></script>
+    <script>
+        // View Model
+        var viewModel = new Vue({
+            el: '#appView',
+            data: {
+                name: 'Mido',
+                item: '',
+                filter_Item: '',
+                tools: ['HTML', 'CSS', 'JavaScript', 'Java', 'PhotoShop']
+            },
+            methods: {
+                addItem: function () {
+                    return this.item === '' ? '' : (this.tools.push(this.item)), this.item = '';;
+                },
+                delItem: function (index) {
+                    return this.tools.splice(index, 1);
+                    this.tools = this.tools;
+                }
+            },
+            computed: {
+                filterItems: function () {
+                    var filterItem = new RegExp(this.filter_Item, 'i');
+                    return this.tools.filter(function (el) {
+                        return el.match(filterItem);
+                    });
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
